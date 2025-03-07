@@ -4,7 +4,11 @@
 
 body {
   font-family: Lato, Helvetica, sans-serif;
+  overflow-x: hidden !important;
+  width: 100%;
+  position: relative;
 }
+
 .fontTomorrow {
   font-family: Tomorrow, sans-serif;
 }

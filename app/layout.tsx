@@ -11,6 +11,8 @@ import "@fontsource/tomorrow/300.css";
 import "@fontsource/tomorrow/400.css";
 import "@fontsource/tomorrow/500.css";
 import "@fontsource/lato";
+import Footer from "../components/Footer";
+import { CartProvider } from "../context/cartContext";
 
 const rubik = Rubik({
   subsets: ["latin"],
@@ -19,7 +21,7 @@ const rubik = Rubik({
 });
 
 export const metadata: Metadata = {
-  title: "pospro",
+  title: "salespro",
   description: "store products listing application",
   icons: {
     icon: "https://www.boslightmulti-serviceslimited.com/logo.png",
@@ -34,11 +36,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <meta name="viewport" content="width=device-width, initial-scale=1" />
-      <body className={`${rubik.variable} antialiased`}>
-        <div>
-          {children}
-        </div>
-      </body>
+      <CartProvider>
+        <body className={`${rubik.variable} antialiased`}>
+          <div>
+            {children}
+          </div>
+        </body>
+        <Footer />
+      </CartProvider>
     </html>
   );
 }
