@@ -12,7 +12,7 @@ import "@fontsource/tomorrow/400.css";
 import "@fontsource/tomorrow/500.css";
 import "@fontsource/lato";
 import Footer from "../components/Footer";
-import { CartProvider } from "../context/cartContext";
+import { CartProvider } from "../context/CartContext";
 
 const rubik = Rubik({
   subsets: ["latin"],

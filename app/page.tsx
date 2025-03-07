@@ -6,7 +6,7 @@ import { Product } from "../types/product";
 import Pagination from "../components/Pagination";
 import ProductCardSkeleton from "../components/ProductCardSkeleton";
 import Header from "../components/Header";
-import { useCart } from "../context/cartContext";
+import { useCart } from "../context/CartContext";
 const ProductModal = React.lazy(() => import("../components/ProductModal"));
 
 export default function ProductsPage() {
