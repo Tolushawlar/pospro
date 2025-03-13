@@ -11,8 +11,8 @@ import "@fontsource/tomorrow/300.css";
 import "@fontsource/tomorrow/400.css";
 import "@fontsource/tomorrow/500.css";
 import "@fontsource/lato";
-import Footer from "../components/Footer";
 import { CartProvider } from "../context/CartContext";
+import FixedBottomBar from "../components/FixedBottomBar";
 
 const rubik = Rubik({
   subsets: ["latin"],
@@ -42,7 +42,7 @@ export default function RootLayout({
             {children}
           </div>
         </body>
-        <Footer />
+        <FixedBottomBar/>
       </CartProvider>
     </html>
   );
