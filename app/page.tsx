@@ -7,7 +7,7 @@ import Pagination from "../components/Pagination";
 import ProductCardSkeleton from "../components/ProductCardSkeleton";
 import Header from "../components/Header";
 import { useCart } from "../context/CartContext";
-import { TabView } from "../components/TabView";
+// import { TabView } from "../components/TabView";
 const ProductModal = React.lazy(() => import("../components/ProductModal"));
 
 export default function ProductsPage() {
