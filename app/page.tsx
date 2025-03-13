@@ -96,7 +96,6 @@ export default function ProductsPage() {
           </div>
         )}
 
-       // Add this code after the Header component and before the main content
         <div className="fixed top-16 left-0 right-0 bg-white shadow-md z-10">
           <div className="container mx-auto px-4">
             <div className="overflow-x-auto whitespace-nowrap py-4">
