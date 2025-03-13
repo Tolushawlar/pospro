@@ -7,6 +7,7 @@ import Pagination from "../components/Pagination";
 import ProductCardSkeleton from "../components/ProductCardSkeleton";
 import Header from "../components/Header";
 import { useCart } from "../context/CartContext";
+import { TabView } from "../components/TabView";
 const ProductModal = React.lazy(() => import("../components/ProductModal"));
 
 export default function ProductsPage() {
@@ -95,7 +96,24 @@ export default function ProductsPage() {
           </div>
         )}
 
-        {/* Product grid */}
+       // Add this code after the Header component and before the main content
+        <div className="fixed top-16 left-0 right-0 bg-white shadow-md z-10">
+          <div className="container mx-auto px-4">
+            <div className="overflow-x-auto whitespace-nowrap py-4">
+              {Array.from(new Set(products.map(product => product.category))).map((category, index) => (
+                <button
+                  key={index}
+                  className="inline-block px-6 py-2 mr-4 rounded-full text-sm font-medium 
+                     bg-orange-100 text-orange-800 hover:bg-orange-200 
+                     transition-colors duration-200"
+                >
+                  {category}
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+
         <div className="w-full">
           {loading ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-6">
@@ -105,11 +123,11 @@ export default function ProductsPage() {
             </div>
           ) : (
             <>
-              <div className="mt-[118px] lg:mt-32 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-6">
+              <div className="mt-[118px] lg:mt-32 grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-4">
                 {currentProducts.map(product => (
                   <div
                     key={product.id}
-                    className="mx-8 lg:m-0 space-x-4 space-y-2 bg-white rounded-lg shadow-md border-[1px] border-orange-100 overflow-hidden transition-transform hover:scale-105 hover:shadow-lg cursor-pointer"
+                    className="mx-2 lg:m-0 bg-white rounded-lg shadow-md border-[1px] border-orange-100 overflow-hidden transition-transform hover:scale-105 hover:shadow-lg cursor-pointer"
                     onClick={() => setSelectedProduct(product)}
                   >
                     <div className="h-48 relative bg-gray-100">
@@ -117,25 +135,22 @@ export default function ProductsPage() {
                         src={product.photo}
                         alt={product.title}
                         fill
-                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                        className="object-contain p-4"
-                        loading="lazy"
+                        sizes="(max-width: 760px) 35vw, (max-width: 1100px) 35vw, 25vw" loading="lazy"
                       />
                     </div>
                     <div className="p-4">
                       <h3 className="font-semibold text-xl mb-2 line-clamp-2">{product.title}</h3>
-                      <p className="text-gray-600 text-sm mb-2 line-clamp-2">Description: {product.note}</p>
+                      <span className="text-orange-600 font-bold">#{product.price.toFixed(2)}</span>
+                      <button className="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-md transition lg:mt-0 mt-4  ">
+                        Add to Cart
+                      </button>
+                      {/* <p className="text-gray-600 text-sm mb-2 line-clamp-2">Description: {product.note}</p> */}
                       <div className="flex justify-between items-center">
-                        <span className="text-orange-600 font-bold">#{product.price.toFixed(2)}</span>
                         <div className="flex flex-column justify-center items-center">
-                          <button className="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-md transition">
-                            Add to Cart
-                          </button>
                         </div>
                       </div>
                     </div>
-                  </div>       //... Product card content remains the same ...
-                ))}
+                  </div>))}
               </div>
               <Pagination
                 currentPage={currentPage}
