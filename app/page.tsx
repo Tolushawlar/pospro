@@ -149,9 +149,9 @@ export default function ProductsPage() {
                       />
                     </div>
                     <div className="p-4">
-                      <h3 className="font-semibold text-xl mb-2 line-clamp-2">{product.title}</h3>
-                      <span className="text-orange-600 font-bold">#{product.price.toFixed(2)}</span>
-                      <button className="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-md transition lg:mt-0 mt-4  ">
+                      <h3 className="font-semibold text-xl mb-1 line-clamp-2">{product.title}</h3>
+                      <p className="text-orange-600 font-bold">#{product.price.toFixed(2)}</p>
+                      <button className="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-md transition lg:mt-0 mt-1  ">
                         Add to Cart
                       </button>
                       <div className="flex justify-between items-center">
