@@ -7,7 +7,10 @@ import Pagination from "../components/Pagination";
 import ProductCardSkeleton from "../components/ProductCardSkeleton";
 import Header from "../components/Header";
 import { useCart } from "../context/CartContext";
-// import { TabView } from "../components/TabView";
+import Cart from "../components/Cart";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import FixedBottomBar from "../components/FixedBottomBar";
 const ProductModal = React.lazy(() => import("../components/ProductModal"));
 
 export default function ProductsPage() {
@@ -18,11 +21,29 @@ export default function ProductsPage() {
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const itemsPerPage = 9;
-  const { getCartItemsCount } = useCart();
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const { addToCart, cartItems, getCartItemsCount } = useCart();
 
   const handleCartClick = () => {
     setIsCartOpen(!isCartOpen);
+  };
+
+  // Check if item is already in cart
+  const isInCart = (productId: number) => {
+    return cartItems.some(item => item.id === productId);
+  };
+
+  // Handle add to cart
+  const handleAddToCart = (product: Product) => {
+    addToCart(product);
+    toast.success(`${product.title} added to cart!`, {
+      position: "bottom-right",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+    });
   };
 
   useEffect(() => {
@@ -60,7 +81,7 @@ export default function ProductsPage() {
   }, []);
 
   // Filter products by selected category
-  const filteredProducts = selectedCategory 
+  const filteredProducts = selectedCategory
     ? products.filter(product => product.category === selectedCategory)
     : products;
 
@@ -87,9 +108,12 @@ export default function ProductsPage() {
       />
 
       {isCartOpen && (
-        <div className="fixed right-0 top-0 h-full w-80 bg-white shadow-lg">
+        <div className="fixed right-0 top-16 w-full md:w-96 h-screen bg-white shadow-lg z-50">
+          <Cart />
         </div>
       )}
+
+      <ToastContainer />
 
       <main className="overflow-x-hidden container mx-auto px-4 py-8 ">
         {error && (
@@ -101,14 +125,14 @@ export default function ProductsPage() {
         <div className="fixed top-16 left-0 right-0 bg-white shadow-md z-10">
           <div className="container mx-auto px-4">
             <div className="overflow-x-auto whitespace-nowrap py-4 flex">
-            <button
-                  className={`inline-block px-6 py-2 mr-4 rounded-full text-sm font-medium flex-shrink-0
+              <button
+                className={`inline-block px-6 py-2 mr-4 rounded-full text-sm font-medium flex-shrink-0
                      ${selectedCategory === null ? 'bg-orange-500 text-white' : 'bg-orange-100 text-orange-800'} 
                      hover:bg-orange-200 transition-colors duration-200`}
-                  onClick={() => setSelectedCategory(null)}
-                >
-                  All
-                </button>
+                onClick={() => setSelectedCategory(null)}
+              >
+                All
+              </button>
               {Array.from(new Set(products.map(product => product.category))).map((category, index) => (
                 <button
                   key={index}
@@ -138,9 +162,9 @@ export default function ProductsPage() {
                   <div
                     key={product.id}
                     className="mx-0 lg:m-0 bg-white rounded-lg shadow-md border-[1px] border-orange-100 overflow-hidden transition-transform hover:scale-105 hover:shadow-lg cursor-pointer"
-                    onClick={() => setSelectedProduct(product)}
+                    // onClick={() => setSelectedProduct(product)}
                   >
-                    <div className="h-48 relative bg-gray-100">
+                    <div className="h-48 z-0 relative bg-gray-100">
                       <Image
                         src={product.photo}
                         alt={product.title}
@@ -151,7 +175,9 @@ export default function ProductsPage() {
                     <div className="p-4">
                       <h3 className="font-semibold text-xl mb-1 line-clamp-2">{product.title}</h3>
                       <p className="text-orange-600 font-bold">#{product.price.toFixed(2)}</p>
-                      <button className="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-md transition lg:mt-0 mt-1  ">
+                      <button
+                        onClick={() => handleAddToCart(product)}
+                        className="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-md transition lg:mt-0 mt-1 w-full ">
                         Add to Cart
                       </button>
                       <div className="flex justify-between items-center">
@@ -170,18 +196,20 @@ export default function ProductsPage() {
             </>
           )}
         </div>
+        <FixedBottomBar />
+
       </main >
 
       {selectedProduct && (
-          <Suspense fallback={<div className="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center">
-            <div className="bg-white p-6 rounded-lg animate-pulse w-80 h-60"></div>
-          </div>}>
-            <ProductModal
-              selectedProduct={selectedProduct}
-              setSelectedProduct={setSelectedProduct}
-            />
-          </Suspense>
-        )}
+        <Suspense fallback={<div className="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center">
+          <div className="bg-white p-6 rounded-lg animate-pulse w-80 h-60"></div>
+        </div>}>
+          <ProductModal
+            selectedProduct={selectedProduct}
+            setSelectedProduct={setSelectedProduct}
+          />
+        </Suspense>
+      )}
     </div >
   );
 }
