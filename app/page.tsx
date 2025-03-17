@@ -22,16 +22,16 @@ export default function ProductsPage() {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const itemsPerPage = 9;
   const [isCartOpen, setIsCartOpen] = useState(false);
-  const { addToCart, cartItems, getCartItemsCount } = useCart();
+  const { addToCart, getCartItemsCount } = useCart();
 
   const handleCartClick = () => {
     setIsCartOpen(!isCartOpen);
   };
 
   // Check if item is already in cart
-  const isInCart = (productId: number) => {
-    return cartItems.some(item => item.id === productId);
-  };
+  // const isInCart = (productId: number) => {
+  //   return cartItems.some(item => item.id === productId);
+  // };
 
   // Handle add to cart
   const handleAddToCart = (product: Product) => {
