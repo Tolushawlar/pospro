@@ -4,6 +4,8 @@
 import React, { Suspense } from "react";
 import Image from "next/image";
 import { Product } from "../types/product";
+import { toast, ToastContainer } from "react-toastify";
+import { useCart } from "../context/CartContext";
 
 
 interface ProductModalProps {
@@ -12,10 +14,26 @@ interface ProductModalProps {
 }
 
 const ProductModalContent = ({ selectedProduct, setSelectedProduct }: ProductModalProps) => {
+  const { addToCart } = useCart();
+
   if (!selectedProduct) return null;
 
+  // Handle add to cart
+  const handleAddToCart = (product: Product) => {
+    addToCart(product);
+    toast.success(`${product.title} added to cart!`, {
+      position: "bottom-right",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+    });
+  };
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+
+      <ToastContainer />
       <div className="bg-white rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto">
         <div className="p-6">
           <div className="flex justify-between items-start mb-4">
@@ -54,7 +72,9 @@ const ProductModalContent = ({ selectedProduct, setSelectedProduct }: ProductMod
 
               <div className="flex flex-col justify-start items-start space-y-2">
                 <span className="text-2xl font-bold text-orange-600">#{selectedProduct.price.toFixed(2)}</span>
-                <button className="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-md transition">
+                <button className="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-md transition"
+                  onClick={() => handleAddToCart(selectedProduct)}
+                >
                   Add to Cart
                 </button>
               </div>

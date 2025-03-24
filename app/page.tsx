@@ -12,6 +12,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import FixedBottomBar from "../components/FixedBottomBar";
 const ProductModal = React.lazy(() => import("../components/ProductModal"));
+import axios from 'axios';
 
 export default function ProductsPage() {
   const [products, setProducts] = useState<Product[]>([]);
@@ -23,6 +24,7 @@ export default function ProductsPage() {
   const itemsPerPage = 9;
   const [isCartOpen, setIsCartOpen] = useState(false);
   const { addToCart, getCartItemsCount } = useCart();
+  const [business, setBusiness] = useState<string>("");
 
   const handleCartClick = () => {
     setIsCartOpen(!isCartOpen);
@@ -48,31 +50,27 @@ export default function ProductsPage() {
 
   useEffect(() => {
     async function postProduct() {
-      const url = "https://salespro.livepetal.com/v1/products";
+      const url = "https://salespro.livepetal.com/v1/productsqr";
 
       const headers = {
-        'Authorization': 'Bearer p2cjbobmwa1mraiv175hji7d5xwewetvwtvte',
+        'Authorization': 'Bearer 30915546',
         'Content-Type': 'application/json'
       };
 
-      const body = {};
-
       try {
-        const response = await fetch(url, {
-          method: 'POST',
-          headers: headers,
-          body: JSON.stringify(body)
-        });
-
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
-        const data = await response.json();
-        setProducts(data.data);
+        const response = await axios.post(url, {}, { headers });
+        setProducts(response.data.data);
+        // console.log(response.data.data);
+        // console.log(products);
+        setBusiness(response.data.business)
         setLoading(false);
       } catch (error) {
-        setError(error);
+        if (axios.isAxiosError(error)) {
+          setError(error.response?.data?.message || error.message);
+        } else {
+          setError('An error occurred');
+        }
+        setLoading(false);
         console.error('There was a problem with the fetch operation:', error);
       }
     }
@@ -105,6 +103,7 @@ export default function ProductsPage() {
       <Header
         cartItemsCount={getCartItemsCount()}
         onCartClick={handleCartClick}
+        storeName={business}
       />
 
       {isCartOpen && (
@@ -157,12 +156,11 @@ export default function ProductsPage() {
             </div>
           ) : (
             <>
-              <div className="mt-[118px] lg:mt-32 grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-4">
+              <div className="mt-[118px] lg:mt-32 grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-4"              >
                 {currentProducts.map(product => (
                   <div
                     key={product.id}
                     className="mx-0 lg:m-0 bg-white rounded-lg shadow-md border-[1px] border-orange-100 overflow-hidden transition-transform hover:scale-105 hover:shadow-lg cursor-pointer"
-                    // onClick={() => setSelectedProduct(product)}
                   >
                     <div className="h-48 z-0 relative bg-gray-100">
                       <Image
@@ -170,6 +168,7 @@ export default function ProductsPage() {
                         alt={product.title}
                         fill
                         sizes="(max-width: 760px) 35vw, (max-width: 1100px) 35vw, 25vw" loading="lazy"
+                        onClick={() => setSelectedProduct(product)}
                       />
                     </div>
                     <div className="p-4">

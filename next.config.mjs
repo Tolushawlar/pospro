@@ -2,12 +2,12 @@
 const nextConfig = {
   async redirects() {
     return [
-      {
-        source: "/:path*",
-        has: [{ type: "host", value: "boslightmulti-serviceslimited.com" }],
-        destination: "https://www.boslightmulti-serviceslimited.com/:path*",
-        permanent: true, // 301 permanent redirect
-      },
+      // {
+      //   source: "/:path*",
+      //   has: [{ type: "host", value: "boslightmulti-serviceslimited.com" }],
+      //   destination: "https://www.boslightmulti-serviceslimited.com/:path*",
+      //   permanent: true, // 301 permanent redirect
+      // },
     ];
   },
   images: {

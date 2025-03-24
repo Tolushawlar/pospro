@@ -6,9 +6,10 @@ import Link from 'next/link';
 interface HeaderProps {
   cartItemsCount?: number;
   onCartClick?: () => void;
+  storeName?: string;
 }
 
-const Header = ({ cartItemsCount = 4, onCartClick }: HeaderProps) => {
+const Header = ({ cartItemsCount = 4, onCartClick, storeName }: HeaderProps) => {
   const [isCartOpen, setIsCartOpen] = useState(false);
 
   const handleCartClick = () => {
@@ -24,7 +25,7 @@ const Header = ({ cartItemsCount = 4, onCartClick }: HeaderProps) => {
         <div className="flex items-center justify-between">
           <div>
             <Link href="/">
-              <h3 className="text-orange-600 text-2xl font-semibold">Obam Stores</h3>
+              <h3 className="text-orange-600 text-2xl font-semibold">{storeName}</h3>
             </Link>
             <p className="text-gray-600 text-sm">Product Listing</p>
           </div>
