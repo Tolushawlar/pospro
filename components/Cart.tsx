@@ -5,7 +5,6 @@ import Image from 'next/image';
 import { useCart } from '../context/CartContext';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import axios from 'axios';
 
 const Cart = () => {
     const { cartItems, removeFromCart, updateQuantity, clearCart } = useCart();

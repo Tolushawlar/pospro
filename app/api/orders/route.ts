@@ -9,7 +9,7 @@ export async function POST(request: Request) {
         console.log('Received order data:', orderData);
 
         // fetch the token stored in the local storage
-        const token = process.env.API_TOKEN || '30915546';
+        // const token = process.env.API_TOKEN || '30915546';
 
         const response = await axios.post(
             'https://salespro.livepetal.com/v1/addorder/',
