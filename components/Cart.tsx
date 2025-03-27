@@ -57,52 +57,204 @@ const Cart = () => {
 
     const prepareOrderData = () => {
         return {
-            servedBy: name,
-            payMethod: paymentMethod,
-            sent: true,
-            name,
-            phone,
-            cart: cartItems.map(item => ({
-                id: item.id.toString(),
-                title: item.title,
-                note: "food",
-                category: item.category || "General",
-                price: item.price,
-                qty: item.quantity,
-                barcode: "",
-                photo: item.photo,
-                localImagePath: "",
-                amount: item.price * item.quantity
+            "servedBy": name,
+            "payMethod": paymentMethod,
+            "sent": true,
+            "name": name,
+            "phone": phone,
+            "total": calculateTotal(),
+            "salesID": Date.now().toString(),
+            "timestamp": new Date().toISOString(),
+            "cart": cartItems.map(item => ({
+                "id": item.id.toString(),
+                "title": item.title,
+                "note": item.note || "food",
+                "category": item.category || "General",
+                "price": item.price
+                // "qty": item.quantity,
+                // "barcode": "",
+                // "photo": item.photo,
+                // "localImagePath": "",
+                // "amount": item.price * item.quantity
             })),
-            total: calculateTotal(),
-            salesID: Date.now().toString(),
-            timestamp: new Date().toISOString()
         };
     };
 
+    // const submitOrderToAPI = async (orderData: any) => {
+    //     const loadingToast = toast.loading('Processing order...', {
+    //         position: "top-center"
+    //     });
+
+    //     try {
+    //         const token = 30915546;
+    //         const response = await axios.post('https://salespro.livepetal.com/v1/addorder/', 
+    //             new URLSearchParams({
+    //                 data: JSON.stringify(orderData)
+    //             }), {
+    //             headers: {
+    //                 'Authorization': `Bearer ${token}`,
+    //                 'Content-Type': 'application/x-www-form-urlencoded',
+    //             }
+    //         });
+
+    //         toast.dismiss(loadingToast);
+
+    //         if (response.status !== 200) {
+    //             throw new Error(`HTTP error! status: ${response.status}`);
+    //         }
+
+    //         toast.success('Order submitted successfully!', {
+    //             position: "top-center",
+    //             autoClose: 3000
+    //         });
+
+    //         clearCart();
+    //         setShowForm(false);
+
+    //     } catch (error) {
+    //         toast.dismiss(loadingToast);
+    //         console.error('Error submitting order:', error);
+    //         toast.error('Failed to submit order', {
+    //             position: "top-center",
+    //             autoClose: 3000
+    //         });
+    //     }
+    // };
+
+    // const submitOrderToAPI = async (orderData: any) => {
+    //     const loadingToast = toast.loading('Processing order...', {
+    //         position: "top-center"
+    //     });
+
+    //     try {
+    //         const token = process.env.API_TOKEN || '30915546'; // Better to use environment variable
+    //         const encodedData = encodeURIComponent(JSON.stringify(orderData));
+    //         const response = await axios.get(`https://salespro.livepetal.com/v1/addorder?data=${encodedData}`, {
+    //             headers: {
+    //                 'Authorization': `Bearer ${token}`
+    //             }
+    //         });
+
+    //         toast.dismiss(loadingToast);
+
+    //         if (response.status !== 200) {
+    //             throw new Error(`HTTP error! status: ${response.status}`);
+    //         }
+
+    //         toast.success('Order submitted successfully!', {
+    //             position: "top-center",
+    //             autoClose: 3000
+    //         });
+
+    //         clearCart();
+    //         setShowForm(false);
+
+    //     } catch (error) {
+    //         toast.dismiss(loadingToast);
+    //         console.error('Error submitting order:', error);
+    //         toast.error('Failed to submit order', {
+    //             position: "top-center",
+    //             autoClose: 3000
+    //         });
+    //     }
+    // };
+
+
+    const handleSubmitForm = async (e: React.FormEvent) => {
+        e.preventDefault();
+
+        localStorage.setItem('customerName', name);
+        localStorage.setItem('customerPhone', phone);
+        localStorage.setItem('paymentMethod', paymentMethod);
+
+        const orderData = prepareOrderData();
+        // const orderData = {
+        //     "servedBy": "Itunuoluwa Owoyemi",
+        //     "payMethod": "Opay",
+        //     "sent": true,
+        //     "name": "sola",
+        //     "phone": "08019201923",
+        //     "total": 450,
+        //     "salesID": "1742831645756",
+        //     "timestamp": "2025-03-24T15:54:05.756Z",
+        //     "cart": [
+        //         {
+        //             "id": "2",
+        //             "title": "Ofada rice",
+        //             "note": "food",
+        //             "category": "Rice",
+        //             "price": 450
+        //         }
+        //     ]
+        // };
+        // console.log(orderData);
+        await submitOrderToAPI(orderData);
+    };
+
+    // const submitOrderToAPI = async (orderData: any) => {
+    //     const loadingToast = toast.loading('Processing order...', {
+    //         position: "top-center"
+    //     });
+
+    //     try {
+    //         const token = process.env.API_TOKEN || '30915546'; // Use environment variable
+    //         const encodedData = encodeURIComponent(JSON.stringify(orderData));
+
+    //         const response = await axios.get(`https://salespro.livepetal.com/v1/addorder?data=${encodedData}`, {
+    //             headers: {
+    //                 'Authorization': `Bearer ${token}`,
+    //                 'Accept': 'application/json', // Ensure server responds with JSON
+    //             }
+    //         });
+
+    //         toast.dismiss(loadingToast);
+
+    //         if (response.status !== 200) {
+    //             throw new Error(`HTTP error! status: ${response.status}`);
+    //         }
+
+    //         toast.success('Order submitted successfully!', {
+    //             position: "top-center",
+    //             autoClose: 3000
+    //         });
+
+    //         clearCart();
+    //         setShowForm(false);
+
+    //     } catch (error) {
+    //         toast.dismiss(loadingToast);
+    //         console.error('Error submitting order:', error);
+    //         toast.error('Failed to submit order', {
+    //             position: "top-center",
+    //             autoClose: 3000
+    //         });
+    //     }
+    // };
+
+
     const submitOrderToAPI = async (orderData: any) => {
+        console.log(orderData);
         const loadingToast = toast.loading('Processing order...', {
             position: "top-center"
         });
 
         try {
-            const token = 30915546;
-            const response = await axios.post('https://salespro.livepetal.com/v1/addorder/', 
-                new URLSearchParams({
-                    data: JSON.stringify(orderData)
-                }), {
+            const response = await fetch('/api/orders', {
+                method: 'POST',
                 headers: {
-                    'Authorization': `Bearer ${token}`,
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                }
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(orderData) // Stringify the orderData here
             });
+            const responseData = await response;
+            console.log(responseData);
 
-            toast.dismiss(loadingToast);
-
-            if (response.status !== 200) {
+            if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
-
+            const data = await response.json();
+            console.log(data);
+            toast.dismiss(loadingToast);
             toast.success('Order submitted successfully!', {
                 position: "top-center",
                 autoClose: 3000
@@ -121,17 +273,6 @@ const Cart = () => {
         }
     };
 
-    const handleSubmitForm = async (e: React.FormEvent) => {
-        e.preventDefault();
-
-        localStorage.setItem('customerName', name);
-        localStorage.setItem('customerPhone', phone);
-        localStorage.setItem('paymentMethod', paymentMethod);
-
-        const orderData = prepareOrderData();
-        console.log(orderData);
-        await submitOrderToAPI(orderData);
-    };
 
     if (cartItems.length === 0) {
         return (

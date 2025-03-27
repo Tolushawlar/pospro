@@ -22,9 +22,9 @@ const rubik = Rubik({
 export const metadata: Metadata = {
   title: "salespro",
   description: "store products listing application",
-  icons: {
-    icon: "https://www.boslightmulti-serviceslimited.com/logo.png",
-  },
+  // icons: {
+  //   icon: "https://www.boslightmulti-serviceslimited.com/logo.png",
+  // },
 };
 
 export default function RootLayout({

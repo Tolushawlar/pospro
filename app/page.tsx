@@ -25,6 +25,10 @@ export default function ProductsPage() {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const { addToCart, getCartItemsCount } = useCart();
   const [business, setBusiness] = useState<string>("");
+  
+  // const pageUrl = window.location.href;
+  // const lastUrlSegment = pageUrl.split('/').pop() || '';
+  // console.log(lastUrlSegment);
 
   const handleCartClick = () => {
     setIsCartOpen(!isCartOpen);
