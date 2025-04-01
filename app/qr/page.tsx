@@ -2,16 +2,16 @@
 
 import React, { useState, useEffect, Suspense } from "react";
 import Image from "next/image";
-import { Product } from "../types/product";
-import Pagination from "../components/Pagination";
-import ProductCardSkeleton from "../components/ProductCardSkeleton";
-import Header from "../components/Header";
-import { useCart } from "../context/CartContext";
-import Cart from "../components/Cart";
+import { Product } from "../../types/product";
+import Pagination from "../../components/Pagination";
+import ProductCardSkeleton from "../../components/ProductCardSkeleton";
+import Header from "../../components/Header";
+import { useCart } from "../../context/CartContext";
+import Cart from "../../components/Cart";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import FixedBottomBar from "../components/FixedBottomBar";
-const ProductModal = React.lazy(() => import("../components/ProductModal"));
+import FixedBottomBar from "../../components/FixedBottomBar";
+const ProductModal = React.lazy(() => import("../../components/ProductModal"));
 import axios from 'axios';
 
 export default function ProductsPage() {

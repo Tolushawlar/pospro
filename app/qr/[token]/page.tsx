@@ -2,16 +2,16 @@
 
 import React, { useState, useEffect, Suspense } from "react";
 import Image from "next/image";
-import { Product } from "../types/product";
-import Pagination from "../components/Pagination";
-import ProductCardSkeleton from "../components/ProductCardSkeleton";
-import Header from "../components/Header";
-import { useCart } from "../context/CartContext";
-import Cart from "../components/Cart";
+import { Product } from "../../../types/product";
+import Pagination from "../../../components/Pagination";
+import ProductCardSkeleton from "../../../components/ProductCardSkeleton";
+import Header from "../../../components/Header";
+import { useCart } from "../../../context/CartContext";
+import Cart from "../../../components/Cart";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import FixedBottomBar from "../components/FixedBottomBar";
-const ProductModal = React.lazy(() => import("../components/ProductModal"));
+import FixedBottomBar from "../../../components/FixedBottomBar";
+const ProductModal = React.lazy(() => import("../../../components/ProductModal"));
 import axios from 'axios';
 
 export default function ProductsPage() {
@@ -25,12 +25,14 @@ export default function ProductsPage() {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const { addToCart, getCartItemsCount } = useCart();
   const [business, setBusiness] = useState<string>("");
-  
+  const [isInvalidToken, setIsInvalidToken] = useState(false);
+
   const pageUrl = window.location.href;
   const lastUrlSegment = pageUrl.split('/').pop() || '';
   console.log(lastUrlSegment);
-  localStorage.setItem('bearerToken', lastUrlSegment);
-
+  const token = lastUrlSegment;
+  localStorage.setItem('bearerToken', token);
+  
   const handleCartClick = () => {
     setIsCartOpen(!isCartOpen);
   };
@@ -56,7 +58,7 @@ export default function ProductsPage() {
   useEffect(() => {
     async function postProduct() {
       const url = "https://salespro.livepetal.com/v1/productsqr";
-      const token = localStorage.getItem('bearerToken');
+      const token = process.env.NEXT_PUBLIC_BEARER_TOKEN || localStorage.getItem('bearerToken');
 
       const headers = {
         'Authorization': `Bearer ${token}`,
@@ -70,6 +72,9 @@ export default function ProductsPage() {
         setLoading(false);
       } catch (error) {
         if (axios.isAxiosError(error)) {
+          if (error.response?.status === 401) {
+            setIsInvalidToken(true);
+          }
           setError(error.response?.data?.message || error.message);
         } else {
           setError('An error occurred');
@@ -102,6 +107,18 @@ export default function ProductsPage() {
     setCurrentPage(1);
   };
 
+  if (isInvalidToken) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-100">
+        <div className="bg-white p-8 rounded-lg shadow-md max-w-md w-full text-center">
+          <h1 className="text-2xl font-bold text-red-600 mb-4">Invalid Access</h1>
+          <p className="text-gray-600 mb-6">The link you are trying to access is invalid or has expired. Please check your link and try again.</p>
+          <p className="text-sm text-gray-500">If you continue to experience issues, please contact support.</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="overflow-x-hidden min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
       <Header
@@ -119,7 +136,7 @@ export default function ProductsPage() {
       <ToastContainer />
 
       <main className="overflow-x-hidden container mx-auto px-4 py-8 ">
-        {error && (
+        {error && !isInvalidToken && (
           <div className="bg-red-50 border-l-4 border-red-500 p-4 mb-6">
             <p className="text-red-700">{error}</p>
           </div>

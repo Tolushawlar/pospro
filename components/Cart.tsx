@@ -236,12 +236,14 @@ const Cart = () => {
         const loadingToast = toast.loading('Processing order...', {
             position: "top-center"
         });
+        const token = localStorage.getItem('bearerToken');
 
         try {
             const response = await fetch('/api/orders', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
                 },
                 body: JSON.stringify(orderData) // Stringify the orderData here
             });
@@ -253,6 +255,7 @@ const Cart = () => {
             }
             const data = await response.json();
             console.log(data);
+            alert("Order Submitted.")
             toast.dismiss(loadingToast);
             toast.success('Order submitted successfully!', {
                 position: "top-center",
