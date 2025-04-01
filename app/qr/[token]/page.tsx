@@ -26,12 +26,15 @@ export default function ProductsPage() {
   const { addToCart, getCartItemsCount } = useCart();
   const [business, setBusiness] = useState<string>("");
   const [isInvalidToken, setIsInvalidToken] = useState(false);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [token, setToken] = useState<string>("");
 
-  const pageUrl = window.location.href;
-  const lastUrlSegment = pageUrl.split('/').pop() || '';
-  console.log(lastUrlSegment);
-  const token = lastUrlSegment;
-  localStorage.setItem('bearerToken', token);
+  useEffect(() => {
+    const pageUrl = window.location.href;
+    const lastUrlSegment = pageUrl.split('/').pop() || '';
+    setToken(lastUrlSegment);
+    localStorage.setItem('bearerToken', lastUrlSegment);
+  }, []);
   
   const handleCartClick = () => {
     setIsCartOpen(!isCartOpen);
