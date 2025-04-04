@@ -69,12 +69,12 @@ const Cart = () => {
                 "title": item.title,
                 "note": item.note || "food",
                 "category": item.category || "General",
-                "price": item.price
-                // "qty": item.quantity,
+                "price": item.price,
+                "qty": item.quantity,
                 // "barcode": "",
-                // "photo": item.photo,
+                "photo": item.photo,
                 // "localImagePath": "",
-                // "amount": item.price * item.quantity
+                "amount": item.price * item.quantity
             })),
         };
     };
@@ -280,6 +280,11 @@ const Cart = () => {
         return (
             <div className="p-4 text-center">
                 <p className="text-gray-500">Your cart is empty</p>
+                <button
+                    onClick={() => window.history.back()}                     className="mt-4 bg-orange-500 text-white px-6 py-2 rounded-md hover:bg-orange-600 transition"
+                >
+                    Back to Shopping
+                </button>
             </div>
         );
     }
