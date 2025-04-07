@@ -9,7 +9,7 @@ interface HeaderProps {
   storeName?: string;
 }
 
-const Header = ({ cartItemsCount = 4, onCartClick, storeName }: HeaderProps) => {
+const Header = ({ cartItemsCount, onCartClick, storeName }: HeaderProps) => {
   const [isCartOpen, setIsCartOpen] = useState(false);
 
   const handleCartClick = () => {
@@ -25,21 +25,34 @@ const Header = ({ cartItemsCount = 4, onCartClick, storeName }: HeaderProps) => 
         <div className="flex items-center justify-between">
           <div>
             <Link href="/">
-              <h3 className="text-orange-600 text-2xl font-semibold">{storeName}</h3>
+              <h3 className="text-orange-600 text-2xl font-semibold mb-2">{storeName}</h3>
             </Link>
-            <p className="text-gray-600 text-sm">Product Listing</p>
+            {/* <p className="text-gray-600 text-sm mb">Product Listing</p> */}
           </div>
 
           <div className="relative cursor-pointer" onClick={handleCartClick}>
-            {cartItemsCount > 0 && (
-              <span className="absolute -top-2 -right-1 text-white bg-orange-600 text-sm w-5 h-5 rounded-full flex items-center justify-center">
-                {cartItemsCount}
-              </span>
-            )}
+
             {isCartOpen ? (
-              <FiX className="text-2xl text-gray-700 hover:text-orange-600 transition-colors" />
+              <div className="flex flex-row items-center justify-between w-full space-x-24 relative bottom-4">
+                {cartItemsCount === 0 && (
+                  <button
+                    onClick={() => setIsCartOpen(false)}
+                    className="mt-4 bg-orange-500 text-white px-6 py-2 rounded-md hover:bg-orange-600 transition "
+                  >
+                    Back to Shopping
+                  </button>
+                )}                
+                <FiX className="text-2xl text-gray-700 hover:text-orange-600 transition-colors mt-4" />
+              </div>
             ) : (
-              <FiShoppingCart className="text-2xl text-gray-700 hover:text-orange-600 transition-colors" />
+              <>
+                {cartItemsCount > 0 && (
+                  <span className="absolute -top-2 -right-1 text-white bg-orange-600 text-sm w-5 h-5 rounded-full flex items-center justify-center">
+                    {cartItemsCount}
+                  </span>
+                )}
+                <FiShoppingCart className="text-2xl text-gray-700 hover:text-orange-600 transition-colors" />
+              </>
             )}
           </div>
         </div>

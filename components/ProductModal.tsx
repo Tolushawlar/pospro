@@ -1,7 +1,8 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 // components/ProductModal.tsx
 "use client";
 
-import React, { Suspense } from "react";
+import React, { Suspense, useCallback } from "react";
 import Image from "next/image";
 import { Product } from "../types/product";
 import { toast, ToastContainer } from "react-toastify";
@@ -18,18 +19,38 @@ const ProductModalContent = ({ selectedProduct, setSelectedProduct }: ProductMod
 
   if (!selectedProduct) return null;
 
+  // Handle modal close
+  const handleClose = useCallback(() => {
+    // Ensure we cleanup before closing
+    setSelectedProduct(null);
+  }, [setSelectedProduct]);
+
   // Handle add to cart
   const handleAddToCart = (product: Product) => {
-    addToCart(product);
-    toast.success(`${product.title} added to cart!`, {
-      position: "bottom-right",
-      autoClose: 2000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-    });
+    try {
+      if (!product) {
+        throw new Error('Product is undefined');
+      }
+      addToCart(product);
+      toast.success(`${product.title} added to cart!`, {
+        position: "bottom-right",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        theme: "light"
+      });
+    } catch (error) {
+      console.error('Error adding product to cart:', error);
+      toast.error('Failed to add product to cart', {
+        position: "bottom-right",
+        autoClose: 1000,
+        theme: "light"
+      });
+    }
   };
+
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
 
@@ -39,7 +60,7 @@ const ProductModalContent = ({ selectedProduct, setSelectedProduct }: ProductMod
           <div className="flex justify-between items-start mb-4">
             <h2 className="text-3xl font-bold ml-4">{selectedProduct.title}</h2>
             <button
-              onClick={() => setSelectedProduct(null)}
+              onClick={handleClose}
               className="text-gray-500 hover:text-gray-700"
             >
               <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">

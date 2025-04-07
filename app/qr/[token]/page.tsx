@@ -35,7 +35,7 @@ export default function ProductsPage() {
     setToken(lastUrlSegment);
     localStorage.setItem('bearerToken', lastUrlSegment);
   }, []);
-  
+
   const handleCartClick = () => {
     setIsCartOpen(!isCartOpen);
   };
@@ -186,12 +186,14 @@ export default function ProductsPage() {
                     key={product.id}
                     className="mx-0 lg:m-0 bg-white rounded-lg shadow-md border-[1px] border-orange-100 overflow-hidden transition-transform hover:scale-105 hover:shadow-lg cursor-pointer"
                   >
-                    <div className="h-48 z-0 relative bg-gray-100">
+                    <div className="h-48 lg:h-64 z-0 relative bg-gray-100">
                       <Image
                         src={product.photo}
                         alt={product.title}
                         fill
-                        sizes="(max-width: 760px) 35vw, (max-width: 1100px) 35vw, 25vw" loading="lazy"
+                        sizes="(max-width: 760px) 35vw, (max-width: 1100px) 35vw, 25vw"
+                        loading="lazy"
+                        className="object-contain"
                         onClick={() => setSelectedProduct(product)}
                       />
                     </div>

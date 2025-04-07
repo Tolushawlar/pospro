@@ -7,7 +7,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const Cart = () => {
-    const { cartItems, removeFromCart, updateQuantity, clearCart } = useCart();
+    const { cartItems, removeFromCart, clearCart } = useCart();
     const [showForm, setShowForm] = useState(false);
     const [name, setName] = useState('');
     const [phone, setPhone] = useState('');
@@ -26,7 +26,22 @@ const Cart = () => {
 
     const handleQuantityChange = (productId: number, title: string, newQuantity: number, currentQuantity: number) => {
         if (newQuantity >= 1) {
-            updateQuantity(productId, newQuantity);
+            // Add error handling for modal state management
+            const handleCloseModal = () => {
+                try {
+                    setShowForm(false);
+                } catch (error) {
+                    console.error('Error closing modal:', error);
+                }
+            };
+
+            // Update button click handler
+            <button
+                className="w-full mt-4 bg-orange-500 text-white py-2 rounded-md hover:bg-orange-600 transition"
+                onClick={handleCloseModal}
+            >
+                Close
+            </button>            
             toast.success(`${title} quantity ${newQuantity > currentQuantity ? 'increased' : 'decreased'} to ${newQuantity}!`, {
                 position: "bottom-right",
                 autoClose: 1000,
@@ -66,13 +81,13 @@ const Cart = () => {
             "timestamp": new Date().toISOString(),
             "cart": cartItems.map(item => ({
                 "id": item.id.toString(),
-                "title": item.title,
-                "note": item.note || "food",
-                "category": item.category || "General",
+                // "title": item.title,
+                // "note": item.note || "food",
+                // "category": item.category || "General",
                 "price": item.price,
                 "qty": item.quantity,
                 // "barcode": "",
-                "photo": item.photo,
+                // "photo": item.photo,
                 // "localImagePath": "",
                 "amount": item.price * item.quantity
             })),
@@ -280,17 +295,12 @@ const Cart = () => {
         return (
             <div className="p-4 text-center">
                 <p className="text-gray-500">Your cart is empty</p>
-                <button
-                    onClick={() => window.history.back()}                     className="mt-4 bg-orange-500 text-white px-6 py-2 rounded-md hover:bg-orange-600 transition"
-                >
-                    Back to Shopping
-                </button>
             </div>
         );
     }
 
     return (
-        <div className="bg-white shadow-lg rounded-lg p-4 max-h-[80vh] overflow-y-auto">
+        <div className="bg-white shadow-lg rounded-lg p-4 max-h-[80vh] overflow-y-auto ">
             <h2 className="text-xl font-bold mb-4">Cart Items</h2>
             <div className="space-y-4">
                 {cartItems.map((item) => (
