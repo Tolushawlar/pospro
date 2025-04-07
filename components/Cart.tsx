@@ -293,14 +293,14 @@ const Cart = () => {
 
     if (cartItems.length === 0) {
         return (
-            <div className="p-4 text-center mt-10 bg-red-400">
+            <div className="p-4 text-center mt-10 ">
                 <p className="text-gray-500">Your cart is empty</p>
             </div>
         );
     }
 
     return (
-        <div className="bg-white shadow-lg rounded-lg p-4 max-h-[80vh] overflow-y-auto mt-10 bg-green-300">
+        <div className="bg-white shadow-lg rounded-lg p-4 max-h-[80vh] overflow-y-auto mt-10">
             <h2 className="text-xl font-bold mb-4">Cart Items</h2>
             <div className="space-y-4">
                 {cartItems.map((item) => (

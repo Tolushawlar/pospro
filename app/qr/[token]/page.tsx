@@ -131,7 +131,7 @@ export default function ProductsPage() {
       />
 
       {isCartOpen && (
-        <div className="fixed right-0 top-[80px] md:top-16 w-full md:w-96 h-screen bg-white shadow-lg z-50 bg-yellow-300">
+        <div className="fixed right-0 top-[80px] md:top-16 w-full md:w-96 h-screen bg-white shadow-lg z-50">
           <Cart />
         </div>
       )}
@@ -180,7 +180,7 @@ export default function ProductsPage() {
             </div>
           ) : (
             <>
-              <div className="mt-[150px] lg:mt-32 grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-4"              >
+              <div className="mt-[150px] lg:mt-32 grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-[12px]"              >
                 {currentProducts.map(product => (
                   <div
                     key={product.id}
