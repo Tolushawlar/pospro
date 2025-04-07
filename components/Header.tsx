@@ -33,11 +33,11 @@ const Header = ({ cartItemsCount, onCartClick, storeName }: HeaderProps) => {
           <div className="relative cursor-pointer" onClick={handleCartClick}>
 
             {isCartOpen ? (
-              <div className="flex flex-row items-center justify-between w-full space-x-24 relative bottom-4">
+              <div className="flex flex-row items-center justify-between w-full space-x-10 relative bottom-4">
                 {cartItemsCount === 0 && (
                   <button
                     onClick={() => setIsCartOpen(false)}
-                    className="mt-4 bg-orange-500 text-white px-6 py-2 rounded-md hover:bg-orange-600 transition "
+                    className="mt-4 w-[150px] md:w-full bg-orange-500 text-white px-2 md:px-6 py-2 rounded-md hover:bg-orange-600 transition "
                   >
                     Back to Shopping
                   </button>
