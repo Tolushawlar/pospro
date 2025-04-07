@@ -300,7 +300,7 @@ const Cart = () => {
     }
 
     return (
-        <div className="bg-white shadow-lg rounded-lg p-4 max-h-[80vh] overflow-y-auto ">
+        <div className="bg-white shadow-lg rounded-lg p-4 max-h-[80vh] overflow-y-auto">
             <h2 className="text-xl font-bold mb-4">Cart Items</h2>
             <div className="space-y-4">
                 {cartItems.map((item) => (
