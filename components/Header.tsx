@@ -21,7 +21,7 @@ const Header = ({ cartItemsCount, onCartClick, storeName }: HeaderProps) => {
 
   return (
     <header className="fixed bg-white shadow-md w-full z-10">
-      <div className="container mx-auto px-4 py-4">
+      <div className="container mx-auto px-4 py-4 mb-10 md:mb-0">
         <div className="flex items-center justify-between">
           <div>
             <Link href="/">
@@ -33,11 +33,11 @@ const Header = ({ cartItemsCount, onCartClick, storeName }: HeaderProps) => {
           <div className="relative cursor-pointer" onClick={handleCartClick}>
 
             {isCartOpen ? (
-              <div className="flex flex-row items-center justify-between w-full space-x-8 relative bottom-4 mt-0">
+              <div className="flex flex-row items-center justify-between w-full space-x-5 relative bottom-4 mt-0">
                 {cartItemsCount === 0 && (
                   <button
                     onClick={() => setIsCartOpen(false)}
-                    className="mt-4 w-[150px] md:w-full bg-orange-500 text-white px-2 md:px-6 py-2 rounded-md hover:bg-orange-600 transition "
+                    className="mt-4 w-[150px] md:w-full bg-orange-500 text-white px-1 md:px-6 py-2 rounded-md hover:bg-orange-600 transition "
                   >
                     Back to Shopping
                   </button>
