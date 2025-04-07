@@ -180,7 +180,7 @@ export default function ProductsPage() {
             </div>
           ) : (
             <>
-              <div className="mt-[150px] lg:mt-32 grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-[12px]"              >
+              <div className="mt-[140px] lg:mt-32 grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-[14px]"              >
                 {currentProducts.map(product => (
                   <div
                     key={product.id}
