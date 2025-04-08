@@ -66,6 +66,7 @@ const Cart = () => {
             "timestamp": new Date().toISOString(),
             "cart": cartItems.map(item => ({
                 "id": item.id.toString(),
+                "title": item.title,
                 "price": item.price,
                 "qty": item.quantity,
                 "amount": item.price * item.quantity
