@@ -83,13 +83,13 @@ const ProductModalContent = ({ selectedProduct, setSelectedProduct }: ProductMod
               <p className="text-lg md:text-xl text-gray-500 mb-2">Category: {selectedProduct.category}</p>
               <p className="text-sm md:text-base text-gray-700 mb-4">Description: {selectedProduct.note}</p>
 
-              <div className="flex flex-col items-left mb-4 space-y-2">
+              {/* <div className="flex flex-col items-left mb-4 space-y-2">
                 <div className="flex items-center mr-4">
                   <span className="text-sm md:text-base text-black mr-1">Product In Store: </span>
                   <span className="text-sm md:text-base">{selectedProduct.qty}</span>
                 </div>
                 <span className="text-sm md:text-base text-gray-500">Product Barcode: {selectedProduct.barcode}</span>
-              </div>
+              </div> */}
 
               <div className="flex flex-col justify-start items-start space-y-2">
                 <span className="text-xl md:text-2xl font-bold text-orange-600">₦{selectedProduct.price.toLocaleString('en-US')}</span>

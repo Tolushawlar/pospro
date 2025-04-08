@@ -187,7 +187,7 @@ export default function ProductsPage() {
                 {currentProducts.map(product => (
                   <div
                     key={product.id}
-                    className="mx-0 lg:m-0 bg-white rounded-lg shadow-md border-[1px] border-orange-100 overflow-hidden transition-transform hover:scale-105 hover:shadow-lg cursor-pointer"
+                    className="mx-0 lg:m-0   overflow-hidden transition-transform hover:scale-105 hover:shadow-lg cursor-pointer"
                   >
                     <div className="h-48 lg:h-64 z-0 relative bg-gray-100">
                       <Image
@@ -224,7 +224,7 @@ export default function ProductsPage() {
         </div>
         <FixedBottomBar />
 
-      </main >
+      </main > 
 
       {selectedProduct && (
         <Suspense fallback={<div className="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center">
