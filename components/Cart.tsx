@@ -7,7 +7,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const Cart = () => {
-    const { cartItems, removeFromCart, clearCart } = useCart();
+    const { cartItems, removeFromCart, clearCart, updateQuantity } = useCart();
     const [showForm, setShowForm] = useState(false);
     const [name, setName] = useState('');
     const [phone, setPhone] = useState('');
@@ -26,22 +26,7 @@ const Cart = () => {
 
     const handleQuantityChange = (productId: number, title: string, newQuantity: number, currentQuantity: number) => {
         if (newQuantity >= 1) {
-            // Add error handling for modal state management
-            const handleCloseModal = () => {
-                try {
-                    setShowForm(false);
-                } catch (error) {
-                    console.error('Error closing modal:', error);
-                }
-            };
-
-            // Update button click handler
-            <button
-                className="w-full mt-4 bg-orange-500 text-white py-2 rounded-md hover:bg-orange-600 transition"
-                onClick={handleCloseModal}
-            >
-                Close
-            </button>            
+            updateQuantity(productId, newQuantity);
             toast.success(`${title} quantity ${newQuantity > currentQuantity ? 'increased' : 'decreased'} to ${newQuantity}!`, {
                 position: "bottom-right",
                 autoClose: 1000,
@@ -81,98 +66,12 @@ const Cart = () => {
             "timestamp": new Date().toISOString(),
             "cart": cartItems.map(item => ({
                 "id": item.id.toString(),
-                // "title": item.title,
-                // "note": item.note || "food",
-                // "category": item.category || "General",
                 "price": item.price,
                 "qty": item.quantity,
-                // "barcode": "",
-                // "photo": item.photo,
-                // "localImagePath": "",
                 "amount": item.price * item.quantity
             })),
         };
     };
-
-    // const submitOrderToAPI = async (orderData: any) => {
-    //     const loadingToast = toast.loading('Processing order...', {
-    //         position: "top-center"
-    //     });
-
-    //     try {
-    //         const token = 30915546;
-    //         const response = await axios.post('https://salespro.livepetal.com/v1/addorder/', 
-    //             new URLSearchParams({
-    //                 data: JSON.stringify(orderData)
-    //             }), {
-    //             headers: {
-    //                 'Authorization': `Bearer ${token}`,
-    //                 'Content-Type': 'application/x-www-form-urlencoded',
-    //             }
-    //         });
-
-    //         toast.dismiss(loadingToast);
-
-    //         if (response.status !== 200) {
-    //             throw new Error(`HTTP error! status: ${response.status}`);
-    //         }
-
-    //         toast.success('Order submitted successfully!', {
-    //             position: "top-center",
-    //             autoClose: 3000
-    //         });
-
-    //         clearCart();
-    //         setShowForm(false);
-
-    //     } catch (error) {
-    //         toast.dismiss(loadingToast);
-    //         console.error('Error submitting order:', error);
-    //         toast.error('Failed to submit order', {
-    //             position: "top-center",
-    //             autoClose: 3000
-    //         });
-    //     }
-    // };
-
-    // const submitOrderToAPI = async (orderData: any) => {
-    //     const loadingToast = toast.loading('Processing order...', {
-    //         position: "top-center"
-    //     });
-
-    //     try {
-    //         const token = process.env.API_TOKEN || '30915546'; // Better to use environment variable
-    //         const encodedData = encodeURIComponent(JSON.stringify(orderData));
-    //         const response = await axios.get(`https://salespro.livepetal.com/v1/addorder?data=${encodedData}`, {
-    //             headers: {
-    //                 'Authorization': `Bearer ${token}`
-    //             }
-    //         });
-
-    //         toast.dismiss(loadingToast);
-
-    //         if (response.status !== 200) {
-    //             throw new Error(`HTTP error! status: ${response.status}`);
-    //         }
-
-    //         toast.success('Order submitted successfully!', {
-    //             position: "top-center",
-    //             autoClose: 3000
-    //         });
-
-    //         clearCart();
-    //         setShowForm(false);
-
-    //     } catch (error) {
-    //         toast.dismiss(loadingToast);
-    //         console.error('Error submitting order:', error);
-    //         toast.error('Failed to submit order', {
-    //             position: "top-center",
-    //             autoClose: 3000
-    //         });
-    //     }
-    // };
-
 
     const handleSubmitForm = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -182,69 +81,8 @@ const Cart = () => {
         localStorage.setItem('paymentMethod', paymentMethod);
 
         const orderData = prepareOrderData();
-        // const orderData = {
-        //     "servedBy": "Itunuoluwa Owoyemi",
-        //     "payMethod": "Opay",
-        //     "sent": true,
-        //     "name": "sola",
-        //     "phone": "08019201923",
-        //     "total": 450,
-        //     "salesID": "1742831645756",
-        //     "timestamp": "2025-03-24T15:54:05.756Z",
-        //     "cart": [
-        //         {
-        //             "id": "2",
-        //             "title": "Ofada rice",
-        //             "note": "food",
-        //             "category": "Rice",
-        //             "price": 450
-        //         }
-        //     ]
-        // };
-        // console.log(orderData);
         await submitOrderToAPI(orderData);
     };
-
-    // const submitOrderToAPI = async (orderData: any) => {
-    //     const loadingToast = toast.loading('Processing order...', {
-    //         position: "top-center"
-    //     });
-
-    //     try {
-    //         const token = process.env.API_TOKEN || '30915546'; // Use environment variable
-    //         const encodedData = encodeURIComponent(JSON.stringify(orderData));
-
-    //         const response = await axios.get(`https://salespro.livepetal.com/v1/addorder?data=${encodedData}`, {
-    //             headers: {
-    //                 'Authorization': `Bearer ${token}`,
-    //                 'Accept': 'application/json', // Ensure server responds with JSON
-    //             }
-    //         });
-
-    //         toast.dismiss(loadingToast);
-
-    //         if (response.status !== 200) {
-    //             throw new Error(`HTTP error! status: ${response.status}`);
-    //         }
-
-    //         toast.success('Order submitted successfully!', {
-    //             position: "top-center",
-    //             autoClose: 3000
-    //         });
-
-    //         clearCart();
-    //         setShowForm(false);
-
-    //     } catch (error) {
-    //         toast.dismiss(loadingToast);
-    //         console.error('Error submitting order:', error);
-    //         toast.error('Failed to submit order', {
-    //             position: "top-center",
-    //             autoClose: 3000
-    //         });
-    //     }
-    // };
-
 
     const submitOrderToAPI = async (orderData: any) => {
         console.log(orderData);
@@ -260,7 +98,7 @@ const Cart = () => {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`
                 },
-                body: JSON.stringify(orderData) // Stringify the orderData here
+                body: JSON.stringify(orderData)
             });
             const responseData = await response;
             console.log(responseData);
@@ -316,8 +154,7 @@ const Cart = () => {
                         </div>
                         <div className="flex-1">
                             <h3 className="font-medium">{item.title}</h3>
-                            <p className="text-orange-600">#{item.price.toFixed(2)}</p>
-                            <div className="flex items-center gap-2 mt-2">
+                            <p className="text-orange-600">₦{item.price.toLocaleString('en-NG')}</p>                            <div className="flex items-center gap-2 mt-2">
                                 <button
                                     className="bg-gray-200 px-2 py-1 rounded"
                                     onClick={() => handleQuantityChange(item.id, item.title, item.quantity - 1, item.quantity)}
@@ -346,7 +183,7 @@ const Cart = () => {
                 <div className="flex justify-between items-center">
                     <span className="font-bold">Total:</span>
                     <span className="text-orange-600 font-bold">
-                        #{calculateTotal().toFixed(2)}
+                        ₦{calculateTotal().toLocaleString('en-NG')}
                     </span>
                 </div>
                 {!showForm ? (
