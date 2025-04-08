@@ -20,8 +20,8 @@ const rubik = Rubik({
 });
 
 export const metadata: Metadata = {
-  title: "salespro",
-  description: "store products listing application",
+  title: "Salespro",
+  description: "Store products listing application",
   // icons: {
   //   icon: "https://www.boslightmulti-serviceslimited.com/logo.png",
   // },

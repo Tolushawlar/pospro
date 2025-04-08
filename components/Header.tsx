@@ -7,9 +7,10 @@ interface HeaderProps {
   cartItemsCount?: number;
   onCartClick?: () => void;
   storeName?: string;
+  storeDescription?: string;
 }
 
-const Header = ({ cartItemsCount, onCartClick, storeName }: HeaderProps) => {
+const Header = ({ cartItemsCount, onCartClick, storeName, storeDescription }: HeaderProps) => {
   const [isCartOpen, setIsCartOpen] = useState(false);
 
   const handleCartClick = () => {
@@ -27,7 +28,7 @@ const Header = ({ cartItemsCount, onCartClick, storeName }: HeaderProps) => {
             <Link href="/">
               <h3 className="text-orange-600 text-2xl font-semibold mb-2">{storeName}</h3>
             </Link>
-            {/* <p className="text-gray-600 text-sm mb">Product Listing</p> */}
+            <p className="text-gray-600 text-sm max-w-[300px] lg:w-full ">{storeDescription}</p>
           </div>
 
           <div className="relative cursor-pointer" onClick={handleCartClick}>
@@ -37,11 +38,11 @@ const Header = ({ cartItemsCount, onCartClick, storeName }: HeaderProps) => {
                 {cartItemsCount === 0 && (
                   <button
                     onClick={() => setIsCartOpen(false)}
-                    className="mt-4 w-[150px] md:w-full bg-orange-500 text-white px-1 md:px-6 py-2 rounded-md hover:bg-orange-600 transition "
+                    className="block lg:hidden mt-4 w-[150px] md:w-full bg-orange-500 text-white px-1 md:px-6 py-2 rounded-md hover:bg-orange-600 transition "
                   >
                     Back to Shopping
                   </button>
-                )}                
+                )}
                 <FiX className="text-2xl text-gray-700 hover:text-orange-600 transition-colors mt-4" />
               </div>
             ) : (

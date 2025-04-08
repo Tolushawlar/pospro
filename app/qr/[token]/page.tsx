@@ -25,6 +25,7 @@ export default function ProductsPage() {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const { addToCart, getCartItemsCount } = useCart();
   const [business, setBusiness] = useState<string>("");
+  const [description, setDescription] = useState<string>("");
   const [isInvalidToken, setIsInvalidToken] = useState(false);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [token, setToken] = useState<string>("");
@@ -70,6 +71,7 @@ export default function ProductsPage() {
 
       try {
         const response = await axios.post(url, {}, { headers });
+        setDescription(response.data.businessdescription);
         setProducts(response.data.data);
         setBusiness(response.data.business)
         setLoading(false);
@@ -128,6 +130,7 @@ export default function ProductsPage() {
         cartItemsCount={getCartItemsCount()}
         onCartClick={handleCartClick}
         storeName={business}
+        storeDescription={description}
       />
 
       {isCartOpen && (
@@ -145,7 +148,7 @@ export default function ProductsPage() {
           </div>
         )}
 
-        <div className="fixed top-[80px] md:top-16 left-0 right-0 bg-white shadow-md z-10">
+        <div className="fixed top-[100px] md:top-20 left-0 right-0 bg-white shadow-md z-10">
           <div className="container mx-auto px-4">
             <div className="overflow-x-auto whitespace-nowrap py-4 flex">
               <button
@@ -180,7 +183,7 @@ export default function ProductsPage() {
             </div>
           ) : (
             <>
-              <div className="mt-[140px] lg:mt-32 grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-[14px]"              >
+              <div className="mt-[150px] lg:mt-34 grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-[14px]">
                 {currentProducts.map(product => (
                   <div
                     key={product.id}
@@ -197,12 +200,11 @@ export default function ProductsPage() {
                         onClick={() => setSelectedProduct(product)}
                       />
                     </div>
-                    <div className="p-4">
-                      <h3 className="font-semibold text-xl mb-1 line-clamp-2">{product.title}</h3>
-                      <p className="text-orange-600 font-bold">#{product.price.toFixed(2)}</p>
-                      <button
+                    <div className="p-2 lg:p-4">
+                      <h3 className="font-semibold text-base lg:text-xl mb-1 line-clamp-2">{product.title}</h3>
+                      <p className="text-orange-600 font-bold text-sm lg:text-base">₦{product.price.toLocaleString('en-NG')}</p>                      <button
                         onClick={() => handleAddToCart(product)}
-                        className="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-md transition lg:mt-0 mt-1 w-full ">
+                        className="bg-orange-500 hover:bg-orange-600 text-white px-3 py-1.5 lg:px-4 lg:py-2 rounded-md transition lg:mt-0 mt-1 w-full text-sm lg:text-base">
                         Add to Cart
                       </button>
                       <div className="flex justify-between items-center">
@@ -211,8 +213,7 @@ export default function ProductsPage() {
                       </div>
                     </div>
                   </div>))}
-              </div>
-              <Pagination
+              </div>              <Pagination
                 currentPage={currentPage}
                 totalItems={filteredProducts.length}
                 itemsPerPage={itemsPerPage}
