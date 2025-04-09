@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 // components/Header.tsx
 import React, { useState } from 'react';
 import { FiShoppingCart, FiX } from 'react-icons/fi';
@@ -28,13 +29,13 @@ const Header = ({ cartItemsCount, onCartClick, storeName, storeDescription }: He
             <Link href="/">
               <h3 className="text-orange-600 text-2xl font-semibold mb-2">{storeName}</h3>
             </Link>
-            <p className="text-gray-600 text-sm max-w-[300px] lg:w-full ">{storeDescription}</p>
+            {/* <p className="text-gray-600 text-sm max-w-[300px] lg:w-full ">{storeDescription}</p> */}
           </div>
 
           <div className="relative cursor-pointer" onClick={handleCartClick}>
 
             {isCartOpen ? (
-              <div className="flex flex-row items-center justify-between w-full space-x-5 relative bottom-4 mt-0">
+              <div className="flex flex-row items-center justify-between w-full space-x-5 relative bottom-6 mt-0">
                 {cartItemsCount === 0 && (
                   <button
                     onClick={() => setIsCartOpen(false)}

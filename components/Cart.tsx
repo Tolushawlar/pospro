@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 // components/Cart.tsx
 import React, { useEffect, useState } from 'react';
@@ -27,27 +28,27 @@ const Cart = () => {
     const handleQuantityChange = (productId: number, title: string, newQuantity: number, currentQuantity: number) => {
         if (newQuantity >= 1) {
             updateQuantity(productId, newQuantity);
-            toast.success(`${title} quantity ${newQuantity > currentQuantity ? 'increased' : 'decreased'} to ${newQuantity}!`, {
-                position: "bottom-right",
-                autoClose: 1000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-            });
+            // toast.success(`${title} quantity ${newQuantity > currentQuantity ? 'increased' : 'decreased'} to ${newQuantity}!`, {
+            //     position: "bottom-right",
+            //     autoClose: 1000,
+            //     hideProgressBar: false,
+            //     closeOnClick: true,
+            //     pauseOnHover: true,
+            //     draggable: true,
+            // });
         }
     };
 
     const handleRemoveFromCart = (id: number, title: string) => {
         removeFromCart(id);
-        toast.error(`${title} removed from cart!`, {
-            position: "bottom-right",
-            autoClose: 1000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-        });
+        // toast.error(`${title} removed from cart!`, {
+        //     position: "bottom-right",
+        //     autoClose: 1000,
+        //     hideProgressBar: false,
+        //     closeOnClick: true,
+        //     pauseOnHover: true,
+        //     draggable: true,
+        // });
     };
 
     const calculateTotal = () => {

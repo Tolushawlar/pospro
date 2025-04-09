@@ -134,7 +134,7 @@ export default function ProductsPage() {
       />
 
       {isCartOpen && (
-        <div className="fixed right-0 top-[80px] md:top-16 w-full md:w-96 h-screen bg-white shadow-lg z-50">
+        <div className="fixed right-0 top-[60px] md:top-16 w-full md:w-96 h-screen bg-white shadow-lg z-50">
           <Cart />
         </div>
       )}
@@ -148,7 +148,7 @@ export default function ProductsPage() {
           </div>
         )}
 
-        <div className="fixed top-[100px] md:top-20 left-0 right-0 bg-white shadow-md z-10">
+        <div className="fixed top-[60px] md:top-16 left-0 right-0 bg-white shadow-md z-10">
           <div className="container mx-auto px-4">
             <div className="overflow-x-auto whitespace-nowrap py-4 flex">
               <button
@@ -183,7 +183,7 @@ export default function ProductsPage() {
             </div>
           ) : (
             <>
-              <div className="mt-[150px] lg:mt-34 grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-[14px]">
+              <div className="mt-[130px] lg:mt-34 grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-[14px]">
                 {currentProducts.map(product => (
                   <div
                     key={product.id}
